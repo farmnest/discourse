@@ -32,7 +32,7 @@ module ImportScripts::PhpBB3
       count(<<-SQL)
         SELECT COUNT(DISTINCT post_username) AS count
         FROM #{@table_prefix}posts
-        WHERE post_username <> ''
+        WHERE post_username = ''
       SQL
     end
 
@@ -43,6 +43,7 @@ module ImportScripts::PhpBB3
         SELECT post_username, MIN(post_time) AS first_post_time
         FROM #{@table_prefix}posts
         WHERE post_username > '#{last_username}'
+        AND post_username = ''
         GROUP BY post_username
         ORDER BY post_username
         LIMIT #{@batch_size}
